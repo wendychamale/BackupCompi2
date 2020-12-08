@@ -80,46 +80,78 @@ reservadas = {
     'isnull':'isnull',
     'notnull':'notnull',
     'unknown':'unknown',
+    'insert':'insert',
+    'into':'into'
 }
 
 tokens = [
-             'PTCOMA',
-             'LLAVIZQ',
-             'LLAVDER',
-             'PARIZQ',
-             'PARDER',
-             'IGUAL',
-             'MAS',
-             'MENOS',
-             'POR',
-             'DIVIDIDO',
-             'CONCAT',
-             'MENQUE',
-             'MAYQUE',
-             'IGUALQUE',
-             'NIGUALQUE',
-             'DECIMAL',
-             'ENTERO',
-             'CADENA',
-             'ID'
+            'mas'
+            'menos'
+            'elevado'
+            'multiplicacion'
+            'division'
+            'modulo'
+            'in'
+            'like'
+            'ilike'
+            'similar'
+            'menor'
+            'mayor'
+            'igual'
+            'menor_igual'
+            'mayor_igual'
+            'diferente1'
+            'diferente2'
+            'and'
+            'or'
+            'ptcoma'
+            'llavea'
+            'llavec'
+            'para'
+            'parac'
+            'dospuntos'
+            'coma'
+            'punto'
+            
+            'smallint'
+            'integer'
+            'bigint'
+            'decimal'
+            'numeric'
+            'real'
+            'doublePrecision'
+            'money'
+            'varchar'
+            'char'
+            'text'
+            'true'
+            'false'
+            'id'
          ] + list(reservadas.values())
 
-# Tokens
-t_PTCOMA = r';'
-t_LLAVIZQ = r'{'
-t_LLAVDER = r'}'
-t_PARIZQ = r'\('
-t_PARDER = r'\)'
-t_IGUAL = r'='
-t_MAS = r'\+'
-t_MENOS = r'-'
-t_POR = r'\*'
-t_DIVIDIDO = r'/'
-t_CONCAT = r'&'
-t_MENQUE = r'<'
-t_MAYQUE = r'>'
-t_IGUALQUE = r'=='
-t_NIGUALQUE = r'!='
+# Tokenst_mas = r'\+'
+t_menos = r'-'
+t_elevado= r'^'
+t_multiplicacion = r'\*'
+t_division =r'/'
+t_modulo= r'%'
+t_menor =r'<'
+t_mayor =r'>'
+t_igual =r'='
+t_menor_igual =r'<='
+t_mayor_igual =r'>='
+t_diferente1=r'<>'
+t_diferente2=r'!='
+t_simboloor=r'\|'
+t_llavea = r'{'
+t_llavec = r'}'
+t_para = r'\('
+t_parc = r'\)'
+t_ptcoma =r';'
+t_dospuntos=r':'
+t_coma=r','
+t_punto=r'.'
+
 
 
 def t_DECIMAL(t):

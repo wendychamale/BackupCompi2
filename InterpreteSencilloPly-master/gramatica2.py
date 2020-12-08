@@ -8,12 +8,11 @@
 reservadas = {
     'show':'show',
     'databases':'databases',
-    'like':'like',
     'select':'select',
     'distinct':'distinct',
-    'from':'r_from',
+    'from':'from',
     'alter':'alter',
-    ' rename':'rename',
+    'rename':'rename',
     'to':'to',
     'owner':'owner',
     'table':'table',
@@ -27,7 +26,6 @@ reservadas = {
     'unique':'unique',
     'foreign':'foreign',
     'key':'key',
-    'or':'or',
     'replace':'replace',
     'if':'if',
     'exist':'exist',
@@ -41,24 +39,23 @@ reservadas = {
     'drop':'drop',
     'update':'update',
     'where':'where',
-    'smallint': 'r_smallint',
-    'integer': 'r_integer',
-    'bigint': 'r_bigint',
-    'decimal': 'r_decimal',
-    'numeric': 'r_numeric',
-    'real': 'r_real',
+    'smallint': 'smallint',
+    'integer': 'integer',
+    'bigint': 'bigint',
+    'decimal': 'decimal',
+    'numeric': 'numeric',
+    'real': 'real',
     'double': 'double',
     'precision': 'precision',
     'money': 'money',
     'character': 'character',
     'varyng': 'varyng',
-    'char': 'r_char',
-    'timestamp': 'r_timestamp',
+    'char': 'char',
+    'timestamp': 'timestamp',
     'without': 'without',
     'time': 'time',
     'zone': 'zone',
-    'date': 'r_date',
-    'time': 'r_time',
+    'date': 'date',
     'interval':'interval',
     'boolean':'boolean',
     'true':'true',
@@ -214,24 +211,18 @@ precedence = (
 
 # Definición de la gramática
 
-from expresiones import *
-from instrucciones import *
 
 
 def p_init(t):
     'init            : instrucciones'
-    t[0] = t[1]
 
 
 def p_instrucciones_lista(t):
     'instrucciones    : instrucciones instruccion'
-    t[1].append(t[2])
-    t[0] = t[1]
 
 
 def p_instrucciones_instruccion(t):
     'instrucciones    : instruccion '
-    t[0] = [t[1]]
 
 
 def p_instruccion(t):
@@ -241,37 +232,30 @@ def p_instruccion(t):
                         | mientras_instr
                         | if_instr
                         | if_else_instr'''
-    t[0] = t[1]
 
 
 def p_instruccion_imprimir(t):
     'imprimir_instr     : IMPRIMIR PARIZQ expresion_cadena PARDER PTCOMA'
-    t[0] = Imprimir(t[3])
 
 
 def p_instruccion_definicion(t):
     'definicion_instr   : NUMERO ID PTCOMA'
-    t[0] = Definicion(t[2])
 
 
 def p_asignacion_instr(t):
     'asignacion_instr   : ID IGUAL expresion_numerica PTCOMA'
-    t[0] = Asignacion(t[1], t[3])
 
 
 def p_mientras_instr(t):
     'mientras_instr     : MIENTRAS PARIZQ expresion_logica PARDER LLAVIZQ instrucciones LLAVDER'
-    t[0] = Mientras(t[3], t[6])
 
 
 def p_if_instr(t):
     'if_instr           : IF PARIZQ expresion_logica PARDER LLAVIZQ instrucciones LLAVDER'
-    t[0] = If(t[3], t[6])
 
 
 def p_if_else_instr(t):
     'if_else_instr      : IF PARIZQ expresion_logica PARDER LLAVIZQ instrucciones LLAVDER ELSE LLAVIZQ instrucciones LLAVDER'
-    t[0] = IfElse(t[3], t[6], t[10])
 
 
 def p_expresion_binaria(t):
@@ -279,50 +263,36 @@ def p_expresion_binaria(t):
                         | expresion_numerica MENOS expresion_numerica
                         | expresion_numerica POR expresion_numerica
                         | expresion_numerica DIVIDIDO expresion_numerica'''
-    if t[2] == '+':
-        t[0] = ExpresionBinaria(t[1], t[3], OPERACION_ARITMETICA.MAS)
-    elif t[2] == '-':
-        t[0] = ExpresionBinaria(t[1], t[3], OPERACION_ARITMETICA.MENOS)
-    elif t[2] == '*':
-        t[0] = ExpresionBinaria(t[1], t[3], OPERACION_ARITMETICA.POR)
-    elif t[2] == '/':
-        t[0] = ExpresionBinaria(t[1], t[3], OPERACION_ARITMETICA.DIVIDIDO)
 
 
 def p_expresion_unaria(t):
     'expresion_numerica : MENOS expresion_numerica %prec UMENOS'
-    t[0] = ExpresionNegativo(t[2])
 
 
 def p_expresion_agrupacion(t):
     'expresion_numerica : PARIZQ expresion_numerica PARDER'
-    t[0] = t[2]
+
 
 
 def p_expresion_number(t):
     '''expresion_numerica : ENTERO
                         | DECIMAL'''
-    t[0] = ExpresionNumero(t[1])
 
 
 def p_expresion_id(t):
     'expresion_numerica   : ID'
-    t[0] = ExpresionIdentificador(t[1])
 
 
 def p_expresion_concatenacion(t):
     'expresion_cadena     : expresion_cadena CONCAT expresion_cadena'
-    t[0] = ExpresionConcatenar(t[1], t[3])
 
 
 def p_expresion_cadena(t):
     'expresion_cadena     : CADENA'
-    t[0] = ExpresionDobleComilla(t[1])
 
 
 def p_expresion_cadena_numerico(t):
     'expresion_cadena     : expresion_numerica'
-    t[0] = ExpresionCadenaNumerico(t[1])
 
 
 def p_expresion_logica(t):
@@ -330,14 +300,6 @@ def p_expresion_logica(t):
                         | expresion_numerica MENQUE expresion_numerica
                         | expresion_numerica IGUALQUE expresion_numerica
                         | expresion_numerica NIGUALQUE expresion_numerica'''
-    if t[2] == '>':
-        t[0] = ExpresionLogica(t[1], t[3], OPERACION_LOGICA.MAYOR_QUE)
-    elif t[2] == '<':
-        t[0] = ExpresionLogica(t[1], t[3], OPERACION_LOGICA.MENOR_QUE)
-    elif t[2] == '==':
-        t[0] = ExpresionLogica(t[1], t[3], OPERACION_LOGICA.IGUAL)
-    elif t[2] == '!=':
-        t[0] = ExpresionLogica(t[1], t[3], OPERACION_LOGICA.DIFERENTE)
 
 
 def p_error(t):

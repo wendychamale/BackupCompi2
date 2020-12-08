@@ -241,7 +241,7 @@ def p_instruccion_imprimir(t):
 def p_instruccion_definicion(t):
     'definicion_instr   : NUMERO ID PTCOMA'
 
-
+#hola
 def p_asignacion_instr(t):
     'asignacion_instr   : ID IGUAL expresion_numerica PTCOMA'
 

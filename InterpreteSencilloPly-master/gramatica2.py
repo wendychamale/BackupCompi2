@@ -4,7 +4,7 @@
 #
 # Ejemplo interprete sencillo con Python utilizando ply en Ubuntu
 # -----------------------------------------------------------------------------
-
+#aqui 
 reservadas = {
     'show':'show',
     'databases':'databases',

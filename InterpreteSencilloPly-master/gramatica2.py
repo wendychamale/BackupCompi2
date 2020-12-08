@@ -91,9 +91,6 @@ tokens = [
             'multiplicacion'
             'division'
             'modulo'
-            'in'
-            'like'
-            'ilike'
             'similar'
             'menor'
             'mayor'
@@ -112,20 +109,10 @@ tokens = [
             'dospuntos'
             'coma'
             'punto'
-            
-            'smallint'
-            'integer'
-            'bigint'
+            'int'
             'decimal'
-            'numeric'
-            'real'
-            'doublePrecision'
-            'money'
             'varchar'
             'char'
-            'text'
-            'true'
-            'false'
             'id'
          ] + list(reservadas.values())
 
@@ -154,34 +141,34 @@ t_punto=r'.'
 
 
 
-def t_DECIMAL(t):
+def t_decimal(t):
     r'\d+\.\d+'
     try:
         t.value = float(t.value)
     except ValueError:
-        print("Float value too large %d", t.value)
+        print("Error no se puede convertir %d", t.value)
         t.value = 0
     return t
 
 
-def t_ENTERO(t):
+def t_int(t):
     r'\d+'
     try:
         t.value = int(t.value)
     except ValueError:
-        print("Integer value too large %d", t.value)
+        print("Valor numerico incorrecto %d", t.value)
         t.value = 0
     return t
 
 
 def t_ID(t):
     r'[a-zA-Z_][a-zA-Z_0-9]*'
-    t.type = reservadas.get(t.value.lower(), 'ID')  # Check for reserved words
+    t.type = reservadas.get(t.value.lower(), 'id')  
     return t
 
 
-def t_CADENA(t):
-    r'\".*?\"'
+def t_varchar(t):
+    r'\'.*?\''
     t.value = t.value[1:-1]  # remuevo las comillas
     return t
 
